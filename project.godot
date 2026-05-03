@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="brackeys-tutorial"
-run/main_scene="uid://cybeq7vmuifin"
+config/name="bracform"
+run/main_scene="uid://cy8rxyfcg6f0c"
 config/features=PackedStringArray("4.6", "Forward Plus")
 
 [audio]
