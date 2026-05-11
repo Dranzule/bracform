@@ -1,0 +1,160 @@
+[gd_scene format=3 uid="uid://cy8rxyfcg6f0c"]
+
+[ext_resource type="Script" uid="uid://hxc1mrnepecd" path="res://scripts/main_menu.gd" id="1_4vh8y"]
+[ext_resource type="Texture2D" uid="uid://ba13h3dgtfji0" path="res://assets/images/menu_background.png" id="2_b1p1q"]
+[ext_resource type="FontFile" uid="uid://cs0crr00vbvd4" path="res://assets/fonts/RobotoMono-VariableFont_wght.ttf" id="3_s7yn2"]
+[ext_resource type="PackedScene" uid="uid://b4xcpqxn3yjhr" path="res://scenes/UI/FadeTransition.tscn" id="4_5r3px"]
+
+[sub_resource type="Animation" id="Animation_4vh8y"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_b1p1q"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("VBoxContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_s7yn2"]
+_data = {
+&"RESET": SubResource("Animation_4vh8y"),
+&"fade_in": SubResource("Animation_b1p1q")
+}
+
+[sub_resource type="Animation" id="Animation_s7yn2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_5r3px"]
+resource_name = "fade_in"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kgeya"]
+_data = {
+&"RESET": SubResource("Animation_s7yn2"),
+&"fade_in": SubResource("Animation_5r3px")
+}
+
+[node name="MainMenu" type="Node2D" unique_id=1075112577]
+script = ExtResource("1_4vh8y")
+
+[node name="Background" type="Sprite2D" parent="." unique_id=1566690292]
+position = Vector2(572.77167, 326.05984)
+scale = Vector2(0.6892683, 0.6906274)
+texture = ExtResource("2_b1p1q")
+
+[node name="FadeTransition" parent="." unique_id=505735446 instance=ExtResource("4_5r3px")]
+visible = false
+
+[node name="FadeTimer" type="Timer" parent="FadeTransition" unique_id=843719826]
+
+[node name="ButtonManager" type="Control" parent="." unique_id=707357176]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ButtonManager" unique_id=2068681699]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.7500001
+anchor_top = 3.1750002
+anchor_right = 5.7000003
+anchor_bottom = 13.475
+offset_top = 33.999992
+offset_right = -1.5258789e-05
+offset_bottom = 34.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+
+[node name="Play" type="Button" parent="ButtonManager/VBoxContainer" unique_id=1546543207]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Play"
+
+[node name="Settings" type="Button" parent="ButtonManager/VBoxContainer" unique_id=389710156]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Settings
+"
+
+[node name="Credits" type="Button" parent="ButtonManager/VBoxContainer" unique_id=1761313378]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Credits
+"
+
+[node name="Quit Game" type="Button" parent="ButtonManager/VBoxContainer" unique_id=1158593720]
+custom_minimum_size = Vector2(0, 70)
+layout_mode = 2
+text = "Quit Game
+"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ButtonManager/VBoxContainer" unique_id=958215861]
+root_node = NodePath("../..")
+libraries/ = SubResource("AnimationLibrary_s7yn2")
+
+[node name="Title" type="Label" parent="." unique_id=1425323912]
+offset_left = 62.0
+offset_top = 25.0
+offset_right = 389.0
+offset_bottom = 123.0
+theme_override_fonts/font = ExtResource("3_s7yn2")
+theme_override_font_sizes/font_size = 64
+text = "Bracform"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Title" unique_id=663169461]
+libraries/ = SubResource("AnimationLibrary_kgeya")
+
+[connection signal="timeout" from="FadeTransition/FadeTimer" to="." method="_on_fade_timer_timeout"]
+[connection signal="pressed" from="ButtonManager/VBoxContainer/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="ButtonManager/VBoxContainer/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="ButtonManager/VBoxContainer/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="ButtonManager/VBoxContainer/Quit Game" to="." method="_on_quit_game_pressed"]

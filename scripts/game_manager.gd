@@ -7,4 +7,6 @@ func addPoint():
 	score += 1
 	score_label.text = "Congratulations! \n You've collected " + str(score) + " coin(s)!"
 
+func _ready():
+	$"../UI/FadeTransition/AnimationPlayer".play("fade_out")
 	
